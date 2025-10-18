@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth, db } from "../../config/firebase";import friendImage from "../../assets/friend.png";
+import { auth } from "../../config/firebase";import friendImage from "../../assets/friend.png";
+import { useNavigate } from "react-router-dom";
 
 
 const Login = () => {
@@ -11,6 +12,8 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const navigate = useNavigate();
+
   const user_auth = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -19,8 +22,8 @@ const Login = () => {
     try {
       if (state === "Sign In") {
         await signInWithEmailAndPassword(auth, email, password);
-        console.log("Login Successful")
-        window.location.href = "/chat"
+        console.log("Login Successful");
+        navigate("/chat");
       } else {
         const userCredential = await createUserWithEmailAndPassword(
           auth,
